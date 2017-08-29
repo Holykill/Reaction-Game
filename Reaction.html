@@ -1,0 +1,112 @@
+<html>
+
+    <head>
+    
+        <title>Reaction game</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+        <style type="text/css">
+            
+        
+            #figure{
+                position: relative;
+                
+            }
+            
+            body{
+                margin: 0;
+                padding: 0;
+                margin-top: 20px;
+                font-size: 1.6rem;
+                color: #353535;
+                background: linear-gradient(to bottom, #ccc, #fff 30%);
+                background-repeat: no-repeat;
+            }
+            
+            #wholeText{
+                text-align: center
+            }
+            
+            #numbers{
+                visibility: hidden;
+            }
+            
+            #recordTime{
+                color: red;
+            }
+            
+        </style>
+        
+    </head>
+
+
+    <body>
+      
+        <div id="wholeText">
+            <h2>Test Your Reactions.</h2>    
+            <p><strong>Instructions: </strong>Click on the squares and circles as quickly as you can!</p>
+            <button type="button" class="btn-lg btn-success" id="startgame">Start the game</button>
+             <div id="numbers">
+                <p><strong>Last Click: <span id="currentTime"></span>s</strong></p>
+                <p><strong>Your Record: <span id="recordTime"></span>s</strong></p>
+            </div>
+        </div>
+        
+        
+        <div id="figure"></div>
+        
+        <script type="text/javascript">
+            
+            var colors = ["blue", "red", "green", "grey", "yellow", "orange", "teal"];
+            var record = 100000;
+            var date;
+            
+            document.getElementById("startgame").onclick = function(){
+                generateFigure();
+                document.getElementById("startgame").style.display = "none";
+                date = new Date().getTime();
+                
+            }
+            
+            document.getElementById("figure").onclick = function() {
+                document.getElementById("numbers").style.visibility = "visible";
+                var score = (new Date().getTime() - date)/1000;
+                document.getElementById("currentTime").innerHTML = score;
+                generateFigure();
+                date = new Date().getTime()
+                if (score < record)
+                    {
+                        record = score;
+                        document.getElementById("recordTime").innerHTML = record;
+
+                    }
+            }
+            
+            function generateFigure(){
+                var color = Math.floor((Math.random()*7));
+                var lw = Math.floor((Math.random()*50) + 50); 
+                var leftMargin = Math.floor((Math.random()*500)+300);
+                var topMargin = Math.floor((Math.random()*300));
+                var isCircle = Math.floor((Math.random()*2));
+                
+                document.getElementById("figure").style.height = lw;
+                document.getElementById("figure").style.width = lw;
+                document.getElementById("figure").style.backgroundColor = colors[color];
+                document.getElementById("figure").style.top = topMargin;
+                document.getElementById("figure").style.left = leftMargin;
+                
+                if(isCircle){
+                    document.getElementById("figure").style.borderRadius = "50%";
+                }
+                else{
+                    document.getElementById("figure").style.borderRadius = "0%";
+                }
+            }
+            
+            
+        </script>
+        
+    </body>
+
+
+
+</html>
